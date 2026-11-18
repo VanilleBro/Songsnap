@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Schallplatte -->
+    <path
+        android:fillColor="#FF0B0B12"
+        android:pathData="M31,54a23,23 0,1 0,46 0a23,23 0,1 0,-46 0z" />
+    <path
+        android:strokeColor="#33FFFFFF"
+        android:strokeWidth="1"
+        android:fillColor="#00000000"
+        android:pathData="M36,54a18,18 0,1 0,36 0a18,18 0,1 0,-36 0z" />
+    <path
+        android:strokeColor="#26FFFFFF"
+        android:strokeWidth="1"
+        android:fillColor="#00000000"
+        android:pathData="M40.5,54a13.5,13.5 0,1 0,27 0a13.5,13.5 0,1 0,-27 0z" />
+    <!-- Label -->
+    <path
+        android:fillColor="#FF1ED760"
+        android:pathData="M45,54a9,9 0,1 0,18 0a9,9 0,1 0,-18 0z" />
+    <!-- Play -->
+    <path
+        android:fillColor="#FF0B0B12"
+        android:pathData="M51.5,49.5L51.5,58.5L58.5,54Z" />
+    <!-- Snap-Blitz -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M72,30L64.5,42L69,42L65,51L74.5,38L69.5,38Z" />
+</vector>
