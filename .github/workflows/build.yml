@@ -2,6 +2,10 @@ name: APK bauen
 
 on:
   push:
+    paths-ignore:
+      - "ios/**"
+      - ".github/workflows/ios.yml"
+      - "README.md"
   workflow_dispatch:
 
 permissions:

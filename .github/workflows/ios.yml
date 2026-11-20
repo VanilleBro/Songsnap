@@ -1,0 +1,68 @@
+name: iOS bauen
+
+on:
+  push:
+    paths:
+      - "ios/**"
+      - ".github/workflows/ios.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Xcode-Projekt erzeugen
+        run: |
+          brew install xcodegen
+          cd ios
+          xcodegen generate
+
+      - name: App kompilieren (unsigniert)
+        run: |
+          cd ios
+          xcodebuild \
+            -project SongSnap.xcodeproj \
+            -scheme SongSnap \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
+            build 2>&1 | tee build.log | grep -E "error:|warning: .*SongSnap|BUILD (SUCCEEDED|FAILED)" || true
+          test -d build/Build/Products/Release-iphoneos/SongSnap.app
+
+      - name: IPA packen
+        run: |
+          cd ios
+          mkdir -p Payload
+          cp -R build/Build/Products/Release-iphoneos/SongSnap.app Payload/
+          zip -qry ../SongSnap.ipa Payload
+
+      - name: Build-Log sichern
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-build-log
+          path: ios/build.log
+          if-no-files-found: ignore
+
+      - name: IPA als Artefakt hochladen
+        uses: actions/upload-artifact@v4
+        with:
+          name: SongSnap-iOS
+          path: SongSnap.ipa
+
+      - name: IPA als Release veröffentlichen
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ios-latest
+          name: SongSnap für iOS (neueste Version)
+          body: Lade **SongSnap.ipa** herunter und installiere sie mit Sideloadly oder AltStore (siehe README).
+          files: SongSnap.ipa
+          make_latest: false
