@@ -77,3 +77,29 @@ app/src/main/java/com/songsnap/game/
 ├── player/SnippetPlayer.kt  präzise Ausschnitte über die Spotify-App
 └── ui/                      Screens & Animationen
 ```
+
+---
+
+## 🍏 iOS-Version
+
+Download: **Releases → ios-latest → `SongSnap.ipa`** (wird automatisch bei jeder Änderung im Ordner `ios/` gebaut).
+
+### Installieren
+Die IPA ist unsigniert. Apple erlaubt Apps außerhalb des App Stores nur mit eigener Signatur:
+- **Sideloadly** (Windows/Mac, kostenlos): iPhone per Kabel anschließen, IPA hineinziehen, mit deiner Apple-ID anmelden, Start.
+  Auf dem iPhone danach unter *Einstellungen → Allgemein → VPN & Geräteverwaltung* dem Entwickler vertrauen
+  und (ab iOS 16) *Datenschutz & Sicherheit → Entwicklermodus* einschalten.
+- **AltStore** funktioniert genauso.
+- Mit einer kostenlosen Apple-ID läuft die App **7 Tage**, danach einfach erneut installieren (bzw. AltStore erneuert automatisch).
+
+### Spotify einrichten
+Dieselbe Spotify-Entwickler-App wie für Android verwenden. Dort zusätzlich:
+- Bei „Which API/SDKs“ **iOS** anhaken
+- **iOS Bundle ID:** `com.songsnap.game` (falls Sideloadly/AltStore die Bundle-ID ändert: die in SongSnap angezeigte ID eintragen)
+- Redirect URI `songsnap://callback` ist schon vorhanden
+
+### Unterschiede zu Android
+- Beim Spielstart wechselt SongSnap einmal kurz zur Spotify-App und automatisch zurück (so verlangt es Spotify auf iOS).
+- iOS friert die Spotify-App ein, sobald sie nichts abspielt. Deshalb läuft der Song während des Spiels **stumm weiter**
+  (System-Lautstärke auf 0) und wird nur für die Ausschnittlänge hörbar. Beim Verlassen des Spiels wird die Lautstärke
+  wiederhergestellt. Die Lautstärke-Tasten bitte während eines Ausschnitts nicht drücken.
